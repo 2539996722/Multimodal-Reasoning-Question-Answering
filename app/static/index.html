@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>InduDoc AI · 工业文档智能解析</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/css/fonts.css?v=20261026.1">
+  <link rel="stylesheet" href="/static/css/app.css?v=20261026.1">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳至主要内容</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="打开导航" title="打开导航">
+        <i data-lucide="menu" aria-hidden="true"></i><span class="icon-fallback">≡</span>
+      </button>
+      <div class="brand" aria-label="InduDoc AI">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-name">InduDoc <strong>AI</strong></span>
+        <span class="environment">企业演示</span>
+      </div>
+      <div class="global-controls">
+        <div class="stage-switch" role="group" aria-label="当前数据集">
+          <button type="button" data-stage="preliminary" class="active">初赛</button>
+          <button type="button" data-stage="semi_final">复赛</button>
+        </div>
+        <span class="service-state" id="ocr-status"><span class="status-dot muted"></span>OCR 未检测</span>
+        <span class="service-state" id="vlm-status"><span class="status-dot muted"></span>VLM 未检测</span>
+        <span class="service-state service-state-secondary" id="retrieval-status"><span class="status-dot muted"></span>Retrieval 未检测</span>
+        <span class="service-state service-state-secondary" id="reranker-status"><span class="status-dot muted"></span>Reranker 未检测</span>
+        <span class="mode-badge" id="mode-badge">演示模式</span>
+        <button class="icon-button" id="settings-shortcut" type="button" aria-label="模型设置" title="模型设置">
+          <i data-lucide="settings-2" aria-hidden="true"></i><span class="icon-fallback">⚙</span>
+        </button>
+      </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar" aria-label="主导航">
+      <nav class="primary-nav">
+        <button class="nav-item active" type="button" data-view="overview" aria-current="page"><i data-lucide="layout-dashboard"></i><span>项目总览</span></button>
+        <button class="nav-item" type="button" data-view="workspace"><i data-lucide="file-search-2"></i><span>文档与问答</span></button>
+        <button class="nav-item" type="button" data-view="batch"><i data-lucide="list-checks"></i><span>批量评测</span></button>
+        <button class="nav-item" type="button" data-view="runs"><i data-lucide="history"></i><span>运行记录</span></button>
+        <button class="nav-item" type="button" data-view="settings"><i data-lucide="sliders-horizontal"></i><span>模型设置</span></button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="system-mini"><span class="status-dot" id="api-dot"></span><div><strong id="api-label">服务检测中</strong><small id="api-version">FastAPI</small></div></div>
+        <button class="quiet-button" id="refresh-global" type="button"><i data-lucide="refresh-cw"></i><span>刷新状态</span></button>
+      </div>
+    </aside>
+
+    <main id="main-content" class="main-content" tabindex="-1" aria-live="polite"></main>
+
+    <nav class="bottom-nav" aria-label="移动端导航">
+      <button class="active" type="button" data-view="overview" aria-current="page"><i data-lucide="layout-dashboard"></i><span>总览</span></button>
+      <button type="button" data-view="workspace"><i data-lucide="file-search-2"></i><span>问答</span></button>
+      <button type="button" data-view="batch"><i data-lucide="list-checks"></i><span>评测</span></button>
+      <button type="button" data-view="runs"><i data-lucide="history"></i><span>记录</span></button>
+      <button type="button" data-view="settings"><i data-lucide="sliders-horizontal"></i><span>设置</span></button>
+    </nav>
+  </div>
+
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+  <div class="offline-banner" id="offline-banner" hidden>服务暂时不可达，当前页面保留已加载内容。<button type="button" id="offline-retry">重新连接</button></div>
+
+  <div class="modal-backdrop" id="ocr-viewer" hidden>
+    <section class="ocr-viewer" role="dialog" aria-modal="true" aria-labelledby="ocr-viewer-title">
+      <header class="ocr-viewer-head">
+        <div class="ocr-viewer-identity">
+          <span class="ocr-title-mark" aria-hidden="true"><i data-lucide="file-scan"></i></span>
+          <div>
+            <span class="eyebrow">OCR ARTIFACT</span>
+            <h2 id="ocr-viewer-title">OCR 识别文档</h2>
+            <p id="ocr-viewer-meta">只读识别结果</p>
+            <div id="ocr-corpus-note"></div>
+          </div>
+        </div>
+        <button class="icon-button" id="ocr-viewer-close" type="button" title="关闭" aria-label="关闭 OCR 文档">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="ocr-viewer-toolbar">
+        <div class="ocr-page-nav" aria-label="OCR 页面导航">
+          <button class="icon-button" id="ocr-page-prev" type="button" title="上一页" aria-label="上一页"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+          <span class="ocr-page-position" id="ocr-page-position" aria-live="polite">P.1 / 1</span>
+          <button class="icon-button" id="ocr-page-next" type="button" title="下一页" aria-label="下一页"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+          <span class="tag" id="ocr-viewer-count">0 字符</span>
+        </div>
+        <div class="ocr-viewer-actions">
+          <button class="secondary-button" id="ocr-viewer-copy" type="button"><i data-lucide="copy" aria-hidden="true"></i>复制文本</button>
+          <button class="secondary-button" id="ocr-viewer-download" type="button"><i data-lucide="download" aria-hidden="true"></i>下载 TXT</button>
+        </div>
+      </div>
+      <pre class="ocr-document" id="ocr-viewer-content" tabindex="0"></pre>
+      <footer class="ocr-viewer-foot">
+        <span>识别文本可能包含版面噪声，请结合左侧 PDF 原页核验。</span>
+        <div class="ocr-viewer-foot-actions">
+          <button class="primary-button ocr-return-button" id="ocr-viewer-return" type="button"><i data-lucide="corner-up-left" aria-hidden="true"></i><span>返回分析</span></button>
+          <button class="secondary-button" id="ocr-viewer-done" type="button">关闭文档</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <div class="modal-backdrop audit-backdrop" id="analysis-viewer" hidden>
+    <section class="analysis-viewer" role="dialog" aria-modal="true" aria-labelledby="analysis-viewer-title">
+      <header class="analysis-viewer-head">
+        <div>
+          <span class="eyebrow">AUDITABLE RESULT</span>
+          <h2 id="analysis-viewer-title">完整分析报告</h2>
+          <p id="analysis-viewer-meta">答案、证据、逐项判断与执行链路</p>
+        </div>
+        <button class="icon-button" id="analysis-viewer-close" type="button" title="关闭" aria-label="关闭完整分析">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="analysis-viewer-scroll" id="analysis-viewer-content"></div>
+      <footer class="analysis-viewer-foot">
+        <span><i data-lucide="shield-check" aria-hidden="true"></i>展示可核验结论，不展示或伪造隐藏思维链。</span>
+        <button class="primary-button" id="analysis-viewer-done" type="button">完成查看</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="modal-backdrop batch-audit-backdrop" id="batch-audit-viewer" hidden>
+    <section class="batch-audit-viewer" role="dialog" aria-modal="true" aria-labelledby="batch-audit-title">
+      <header class="analysis-viewer-head">
+        <div><span class="eyebrow">QUESTION AUDIT</span><h2 id="batch-audit-title">逐题审计</h2><p id="batch-audit-meta">查看批量任务中的每一道题</p></div>
+        <button class="icon-button" id="batch-audit-close" type="button" title="关闭" aria-label="关闭逐题审计"><i data-lucide="x" aria-hidden="true"></i></button>
+      </header>
+      <div class="batch-audit-viewer-body" id="batch-audit-content"></div>
+      <footer class="analysis-viewer-foot batch-audit-viewer-foot"><button class="secondary-button" id="batch-audit-prev" type="button"><i data-lucide="arrow-left" aria-hidden="true"></i>上一题</button><span id="batch-audit-position">-- / --</span><button class="primary-button" id="batch-audit-next" type="button">下一题<i data-lucide="arrow-right" aria-hidden="true"></i></button></footer>
+    </section>
+  </div>
+
+  <script src="/static/js/vendor/lucide.min.js?v=20261025.1"></script>
+  <script src="/static/js/api.js?v=20261025.1"></script>
+  <script src="/static/js/state.js?v=20261025.1"></script>
+  <script src="/static/js/views.js?v=20261025.1"></script>
+  <script src="/static/js/app.js?v=20261025.1"></script>
+</body>
+</html>

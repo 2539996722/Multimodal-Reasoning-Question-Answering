@@ -1,0 +1,72 @@
+# ============================================================
+# InduDoc AI · 提交边界（本地完整说明见 AGENTS.md，该文件本身也不入库）
+# 三条判据：含密钥 → 不提交；大二进制/数据集 → 不提交；运行期产物 → 不提交
+# ============================================================
+
+# ---------- 本地协作约定（不对外公开）----------
+# Agent / 协作者说明只在本机保留；仓库里靠本文件的规则 + README 约束行为
+/AGENTS.md
+/Agent.md
+/CLAUDE.md
+/.cursorrules
+/.cursor/
+/.github/copilot-instructions.md
+
+# ---------- 密钥与本地环境 ----------
+.env
+.env.*
+!.env.example
+.env.local
+*.pem
+*.key
+*.p12
+secrets.json
+
+# ---------- 模型端点配置（含明文 API Key，禁止提交）----------
+runtime/model-settings.json
+runtime/model-settings.json.tmp
+
+# ---------- 比赛数据集与派生数据（第三方数据，禁止再分发）----------
+/preliminary_dataset/
+/semi_final_dataset/
+/imgs/
+/data/
+
+# ---------- 模型权重与微调产物 ----------
+/outputs/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.gguf
+
+# ---------- 运行期产物（可丢弃、可重建）----------
+runtime/exports/
+runtime/browser-artifacts/
+runtime/chrome-profile/
+runtime/_chrome-*/
+runtime/ocr-corpus/
+runtime/rag-index/
+runtime/hf_cache/
+runtime/_hf_cache/
+runtime/*.log
+runtime/*.pid
+
+# 开发期一次性脚本与探测产物
+runtime/_*
+
+# LLaMA-Factory WebUI 缓存
+llamaboard_cache/
+
+# LoRA 训练包：只保留手工维护的三份，数据与生成物不入库
+/runtime/lora-data/*
+!/runtime/lora-data/README.md
+!/runtime/lora-data/train_qwen3_5_lora.yaml
+!/runtime/lora-data/dataset_info.json
+
+# ---------- Python 缓存 ----------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/

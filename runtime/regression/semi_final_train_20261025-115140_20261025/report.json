@@ -1,0 +1,919 @@
+{
+  "tool": "evaluate_regression",
+  "generated_at": "2026-10-25T03:51:40.529965+00:00",
+  "config": {
+    "stage": "semi_final",
+    "split": "train",
+    "size": 4,
+    "seed": 20261025,
+    "arms": [
+      "baseline",
+      "rag"
+    ],
+    "force_demo": false,
+    "base_url": "http://127.0.0.1:8000",
+    "concurrency": 1,
+    "timeout": 120.0,
+    "max_retries": 1,
+    "backoff": 1.5,
+    "exclude_documents": [],
+    "bertscore_enabled": true,
+    "bertscore_timeout": 900.0,
+    "bertscore_offline": true,
+    "dry_run": false,
+    "output_root": "E:\\my_Program\\多模态项目\\runtime\\regression"
+  },
+  "selection": {
+    "stage": "semi_final",
+    "split": "train",
+    "requested_size": 4,
+    "selected_count": 4,
+    "seed": 20261025,
+    "available_total": 600,
+    "available_documents": 177,
+    "excluded_documents": [],
+    "document_count": 3,
+    "documents": [
+      "CN211418332U.pdf",
+      "CN202059666U.pdf",
+      "CN101554691B.pdf"
+    ],
+    "groups": [
+      {
+        "document": "CN211418332U.pdf",
+        "count": 2,
+        "start_index": 0,
+        "end_index": 1
+      },
+      {
+        "document": "CN202059666U.pdf",
+        "count": 1,
+        "start_index": 2,
+        "end_index": 2
+      },
+      {
+        "document": "CN101554691B.pdf",
+        "count": 1,
+        "start_index": 3,
+        "end_index": 3
+      }
+    ],
+    "question_ids": [
+      "155",
+      "156",
+      "136",
+      "100"
+    ],
+    "category_distribution": {
+      "spatial_relation": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "connection_state": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "function_problem": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "process_causal": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "other": {
+        "count": 0,
+        "ratio": 0.0
+      }
+    },
+    "pattern_match_distribution": {
+      "spatial_relation": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "connection_state": {
+        "count": 1,
+        "ratio": 0.25
+      },
+      "function_problem": {
+        "count": 2,
+        "ratio": 0.5
+      },
+      "process_causal": {
+        "count": 1,
+        "ratio": 0.25
+      }
+    },
+    "target_page_available": 2,
+    "target_page_missing": 2,
+    "with_reference": 4
+  },
+  "arms": {
+    "baseline": {
+      "label": "baseline（目标页 OCR + VLM，use_rag=false）",
+      "use_rag": false,
+      "aggregate": {
+        "totals": {
+          "questions": 4,
+          "succeeded": 4,
+          "failed": 0,
+          "failure_rate": 0.0,
+          "with_reference": 4,
+          "retrieval_applicable": 0,
+          "retrieval_skipped": 4
+        },
+        "answer_metrics": {
+          "accuracy": null,
+          "exact_match": 0.25,
+          "rouge1_f1": 0.683333,
+          "bert_f1": 0.833023,
+          "bert_f1_status": "已计算（bert-base-chinese / zh · 独立子进程 · 本地缓存模式）",
+          "final_score": 0.649845,
+          "final_score_status": "已计算",
+          "sample_size": 4,
+          "backend_em_agreement": 1.0,
+          "backend_em_comparable": 4
+        },
+        "retrieval_metrics": {
+          "recall_at_1": null,
+          "recall_at_3": null,
+          "recall_at_6": null,
+          "mrr": null,
+          "sample_size": 0,
+          "skipped": 4
+        },
+        "operations": {
+          "avg_duration_ms": 40241.975,
+          "p95_duration_ms": 49436.38,
+          "avg_chunk_count": 0.0,
+          "avg_input_fragments": 0.0,
+          "degraded_count": 0,
+          "degradation_rate": 0.0,
+          "retrieval_protocol_distribution": {
+            "skipped": 4
+          },
+          "rerank_protocol_distribution": {
+            "skipped": 4
+          },
+          "mode_distribution": {
+            "real": 4
+          }
+        }
+      },
+      "questions": [
+        {
+          "id": "155",
+          "document": "CN211418332U.pdf",
+          "category": "function_problem",
+          "category_label": "功能/技术问题",
+          "target_page": null,
+          "reference": "用于稳定固定储罐",
+          "prediction": "控制夹紧板对储罐进行稳定固定",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 49827.4,
+          "trace_duration_ms": 49820.5,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            1
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.5,
+          "bert_f1": 0.7494297623634338,
+          "final_score": 0.4997148811817169,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "该评测臂未启用 RAG（use_rag=false），无召回序列",
+            "target_page": null,
+            "item_count": 0,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": false,
+            "requested": false,
+            "chunk_count": 0,
+            "item_count": 0,
+            "retrieval_protocol": "skipped",
+            "rerank_protocol": "skipped",
+            "index_version": null,
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "156",
+          "document": "CN211418332U.pdf",
+          "category": "spatial_relation",
+          "category_label": "空间关系",
+          "target_page": 6,
+          "reference": "部件3(夹紧板)和部件4(移动板)",
+          "prediction": "部件3和部件8之间",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 27079.1,
+          "trace_duration_ms": 27055.0,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            6
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5333333333333333,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.5333333333333333,
+          "bert_f1": 0.7564371228218079,
+          "final_score": 0.5115518947442372,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "该评测臂未启用 RAG（use_rag=false），无召回序列",
+            "target_page": 6,
+            "item_count": 0,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": false,
+            "requested": false,
+            "chunk_count": 0,
+            "item_count": 0,
+            "retrieval_protocol": "skipped",
+            "rerank_protocol": "skipped",
+            "index_version": null,
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "136",
+          "document": "CN202059666U.pdf",
+          "category": "connection_state",
+          "category_label": "部件连接/状态",
+          "target_page": null,
+          "reference": "实现离子风机之间的电连接",
+          "prediction": "实现离子风机之间的电连接,用于串联连接多个离子风机",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 47220.6,
+          "trace_duration_ms": 47200.0,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            1
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.7000000000000001,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.7000000000000001,
+          "bert_f1": 0.8814526200294495,
+          "final_score": 0.6157263100147248,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "该评测臂未启用 RAG（use_rag=false），无召回序列",
+            "target_page": null,
+            "item_count": 0,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": false,
+            "requested": false,
+            "chunk_count": 0,
+            "item_count": 0,
+            "retrieval_protocol": "skipped",
+            "rerank_protocol": "skipped",
+            "index_version": null,
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "100",
+          "document": "CN101554691B.pdf",
+          "category": "process_causal",
+          "category_label": "工艺步骤/因果",
+          "target_page": 11,
+          "reference": "是否存在涂敷不良位置？",
+          "prediction": "是否存在涂敷不良位置?",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 36840.8,
+          "trace_duration_ms": 36822.6,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            11
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 1.0,
+            "rouge1_f1": 1.0,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 1.0,
+          "rouge1_f1": 1.0,
+          "bert_f1": 0.9447715282440186,
+          "final_score": 0.9723857641220093,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "该评测臂未启用 RAG（use_rag=false），无召回序列",
+            "target_page": 11,
+            "item_count": 0,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": false,
+            "requested": false,
+            "chunk_count": 0,
+            "item_count": 0,
+            "retrieval_protocol": "skipped",
+            "rerank_protocol": "skipped",
+            "index_version": null,
+            "degraded": false,
+            "degradation_reason": null
+          }
+        }
+      ]
+    },
+    "rag": {
+      "label": "rag（LangChain 分块 -> FAISS 召回 -> Reranker 重排 -> VLM，use_rag=true）",
+      "use_rag": true,
+      "aggregate": {
+        "totals": {
+          "questions": 4,
+          "succeeded": 4,
+          "failed": 0,
+          "failure_rate": 0.0,
+          "with_reference": 4,
+          "retrieval_applicable": 2,
+          "retrieval_skipped": 2
+        },
+        "answer_metrics": {
+          "accuracy": null,
+          "exact_match": 0.25,
+          "rouge1_f1": 0.693786,
+          "bert_f1": 0.831161,
+          "bert_f1_status": "已计算（bert-base-chinese / zh · 独立子进程 · 本地缓存模式）",
+          "final_score": 0.651527,
+          "final_score_status": "已计算",
+          "sample_size": 4,
+          "backend_em_agreement": 1.0,
+          "backend_em_comparable": 4
+        },
+        "retrieval_metrics": {
+          "recall_at_1": 0.5,
+          "recall_at_3": 0.5,
+          "recall_at_6": 1.0,
+          "mrr": 0.625,
+          "sample_size": 2,
+          "skipped": 2
+        },
+        "operations": {
+          "avg_duration_ms": 30476.825,
+          "p95_duration_ms": 43285.06,
+          "avg_chunk_count": 24.5,
+          "avg_input_fragments": 6.0,
+          "degraded_count": 0,
+          "degradation_rate": 0.0,
+          "retrieval_protocol_distribution": {
+            "hybrid_keyword_vector_npy": 4
+          },
+          "rerank_protocol_distribution": {
+            "compatible_rerank": 4
+          },
+          "mode_distribution": {
+            "real": 4
+          }
+        }
+      },
+      "questions": [
+        {
+          "id": "155",
+          "document": "CN211418332U.pdf",
+          "category": "function_problem",
+          "category_label": "功能/技术问题",
+          "target_page": null,
+          "reference": "用于稳定固定储罐",
+          "prediction": "控制夹紧板对储罐进行稳定固定",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 26116.1,
+          "trace_duration_ms": 24901.9,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            1,
+            3,
+            4
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.5,
+          "bert_f1": 0.7494297623634338,
+          "final_score": 0.4997148811817169,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "题干未包含「第 N 页」提示，无法确定目标页",
+            "target_page": null,
+            "item_count": 6,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": true,
+            "requested": true,
+            "chunk_count": 16,
+            "item_count": 6,
+            "retrieval_protocol": "hybrid_keyword_vector_npy",
+            "rerank_protocol": "compatible_rerank",
+            "index_version": "a976f7b34958e6a4f29d15fa3bd5136352f6b9cec1dcee50ec8275c482c6f737",
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "156",
+          "document": "CN211418332U.pdf",
+          "category": "spatial_relation",
+          "category_label": "空间关系",
+          "target_page": 6,
+          "reference": "部件3(夹紧板)和部件4(移动板)",
+          "prediction": "夹紧板(3)和移动板(4)之间",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 20931.8,
+          "trace_duration_ms": 19754.3,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            2,
+            3,
+            4,
+            6
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.823529411764706,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.823529411764706,
+          "bert_f1": 0.8106184005737305,
+          "final_score": 0.6111915532280418,
+          "retrieval": {
+            "applicable": true,
+            "skip_reason": null,
+            "target_page": 6,
+            "item_count": 6,
+            "first_hit_rank": 4,
+            "mrr": 0.25,
+            "recall_at_1": 0.0,
+            "recall_at_3": 0.0,
+            "recall_at_6": 1.0
+          },
+          "rag": {
+            "enabled": true,
+            "requested": true,
+            "chunk_count": 16,
+            "item_count": 6,
+            "retrieval_protocol": "hybrid_keyword_vector_npy",
+            "rerank_protocol": "compatible_rerank",
+            "index_version": "a976f7b34958e6a4f29d15fa3bd5136352f6b9cec1dcee50ec8275c482c6f737",
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "136",
+          "document": "CN202059666U.pdf",
+          "category": "connection_state",
+          "category_label": "部件连接/状态",
+          "target_page": null,
+          "reference": "实现离子风机之间的电连接",
+          "prediction": "实现离子风机之间的电连接,用于串联连接多台离子风机,使电力通过网络线传递,实现多台离子风机共用电源",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 45794.5,
+          "trace_duration_ms": 44699.0,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            1,
+            2,
+            4
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 0.0,
+            "rouge1_f1": 0.45161290322580644,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 0.0,
+          "rouge1_f1": 0.45161290322580644,
+          "bert_f1": 0.8198233246803284,
+          "final_score": 0.5228148881466158,
+          "retrieval": {
+            "applicable": false,
+            "skip_reason": "题干未包含「第 N 页」提示，无法确定目标页",
+            "target_page": null,
+            "item_count": 6,
+            "first_hit_rank": null,
+            "mrr": null,
+            "recall_at_1": null,
+            "recall_at_3": null,
+            "recall_at_6": null
+          },
+          "rag": {
+            "enabled": true,
+            "requested": true,
+            "chunk_count": 10,
+            "item_count": 6,
+            "retrieval_protocol": "hybrid_keyword_vector_npy",
+            "rerank_protocol": "compatible_rerank",
+            "index_version": "fc2c882d26580fa55a7218673edcb70006816c8211ae0b717e1abf8665324990",
+            "degraded": false,
+            "degradation_reason": null
+          }
+        },
+        {
+          "id": "100",
+          "document": "CN101554691B.pdf",
+          "category": "process_causal",
+          "category_label": "工艺步骤/因果",
+          "target_page": 11,
+          "reference": "是否存在涂敷不良位置？",
+          "prediction": "是否存在涂敷不良位置?",
+          "ok": true,
+          "attempts": 1,
+          "duration_ms": 29064.9,
+          "trace_duration_ms": 27847.0,
+          "mode": "real",
+          "error": null,
+          "evidence_pages": [
+            6,
+            11
+          ],
+          "backend_metrics": {
+            "applicable": true,
+            "accuracy": null,
+            "exact_match": 1.0,
+            "rouge1_f1": 1.0,
+            "semantic_f1": null,
+            "bert_f1": null,
+            "final_score": null
+          },
+          "accuracy": null,
+          "exact_match": 1.0,
+          "rouge1_f1": 1.0,
+          "bert_f1": 0.9447715282440186,
+          "final_score": 0.9723857641220093,
+          "retrieval": {
+            "applicable": true,
+            "skip_reason": null,
+            "target_page": 11,
+            "item_count": 6,
+            "first_hit_rank": 1,
+            "mrr": 1.0,
+            "recall_at_1": 1.0,
+            "recall_at_3": 1.0,
+            "recall_at_6": 1.0
+          },
+          "rag": {
+            "enabled": true,
+            "requested": true,
+            "chunk_count": 56,
+            "item_count": 6,
+            "retrieval_protocol": "hybrid_keyword_vector_npy",
+            "rerank_protocol": "compatible_rerank",
+            "index_version": "4b1baf8c37a26a5d7c06e80d8e1546ad340f4a4f458340bbe688fb0b6b95b214",
+            "degraded": false,
+            "degradation_reason": null
+          }
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "baseline_arm": "baseline",
+    "compare_arm": "rag",
+    "metrics": [
+      {
+        "key": "exact_match",
+        "label": "EM（规范化精确匹配）",
+        "higher_is_better": true,
+        "baseline": 0.25,
+        "rag": 0.25,
+        "delta": 0.0
+      },
+      {
+        "key": "rouge1_f1",
+        "label": "ROUGE-1 F1（jieba）",
+        "higher_is_better": true,
+        "baseline": 0.683333,
+        "rag": 0.693786,
+        "delta": 0.010453
+      },
+      {
+        "key": "bert_f1",
+        "label": "BERTScore F1",
+        "higher_is_better": true,
+        "baseline": 0.833023,
+        "rag": 0.831161,
+        "delta": -0.001862
+      },
+      {
+        "key": "final_score",
+        "label": "官方综合分",
+        "higher_is_better": true,
+        "baseline": 0.649845,
+        "rag": 0.651527,
+        "delta": 0.001682
+      },
+      {
+        "key": "recall_at_1",
+        "label": "Recall@1",
+        "higher_is_better": true,
+        "baseline": null,
+        "rag": 0.5,
+        "delta": null
+      },
+      {
+        "key": "recall_at_3",
+        "label": "Recall@3",
+        "higher_is_better": true,
+        "baseline": null,
+        "rag": 0.5,
+        "delta": null
+      },
+      {
+        "key": "recall_at_6",
+        "label": "Recall@6",
+        "higher_is_better": true,
+        "baseline": null,
+        "rag": 1.0,
+        "delta": null
+      },
+      {
+        "key": "mrr",
+        "label": "MRR",
+        "higher_is_better": true,
+        "baseline": null,
+        "rag": 0.625,
+        "delta": null
+      },
+      {
+        "key": "avg_duration_ms",
+        "label": "平均耗时(ms)",
+        "higher_is_better": false,
+        "baseline": 40241.975,
+        "rag": 30476.825,
+        "delta": -9765.15
+      },
+      {
+        "key": "p95_duration_ms",
+        "label": "P95 耗时(ms)",
+        "higher_is_better": false,
+        "baseline": 49436.38,
+        "rag": 43285.06,
+        "delta": -6151.32
+      },
+      {
+        "key": "avg_chunk_count",
+        "label": "平均 chunk 数",
+        "higher_is_better": null,
+        "baseline": 0.0,
+        "rag": 24.5,
+        "delta": 24.5
+      },
+      {
+        "key": "avg_input_fragments",
+        "label": "平均输入片段数",
+        "higher_is_better": null,
+        "baseline": 0.0,
+        "rag": 6.0,
+        "delta": 6.0
+      },
+      {
+        "key": "failure_rate",
+        "label": "失败率",
+        "higher_is_better": false,
+        "baseline": 0.0,
+        "rag": 0.0,
+        "delta": 0.0
+      },
+      {
+        "key": "degradation_rate",
+        "label": "降级率",
+        "higher_is_better": false,
+        "baseline": 0.0,
+        "rag": 0.0,
+        "delta": 0.0
+      }
+    ],
+    "per_question": [
+      {
+        "id": "155",
+        "document": "CN211418332U.pdf",
+        "category_label": "功能/技术问题",
+        "target_page": null,
+        "arms": {
+          "baseline": {
+            "ok": true,
+            "prediction": "控制夹紧板对储罐进行稳定固定",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5,
+            "bert_f1": 0.7494297623634338,
+            "final_score": 0.4997148811817169,
+            "duration_ms": 49827.4,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          },
+          "rag": {
+            "ok": true,
+            "prediction": "控制夹紧板对储罐进行稳定固定",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5,
+            "bert_f1": 0.7494297623634338,
+            "final_score": 0.4997148811817169,
+            "duration_ms": 26116.1,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          }
+        }
+      },
+      {
+        "id": "156",
+        "document": "CN211418332U.pdf",
+        "category_label": "空间关系",
+        "target_page": 6,
+        "arms": {
+          "baseline": {
+            "ok": true,
+            "prediction": "部件3和部件8之间",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.5333333333333333,
+            "bert_f1": 0.7564371228218079,
+            "final_score": 0.5115518947442372,
+            "duration_ms": 27079.1,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          },
+          "rag": {
+            "ok": true,
+            "prediction": "夹紧板(3)和移动板(4)之间",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.823529411764706,
+            "bert_f1": 0.8106184005737305,
+            "final_score": 0.6111915532280418,
+            "duration_ms": 20931.8,
+            "first_hit_rank": 4,
+            "mrr": 0.25,
+            "error": null
+          }
+        }
+      },
+      {
+        "id": "136",
+        "document": "CN202059666U.pdf",
+        "category_label": "部件连接/状态",
+        "target_page": null,
+        "arms": {
+          "baseline": {
+            "ok": true,
+            "prediction": "实现离子风机之间的电连接,用于串联连接多个离子风机",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.7000000000000001,
+            "bert_f1": 0.8814526200294495,
+            "final_score": 0.6157263100147248,
+            "duration_ms": 47220.6,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          },
+          "rag": {
+            "ok": true,
+            "prediction": "实现离子风机之间的电连接,用于串联连接多台离子风机,使电力通过网络线传递,实现多台离子风机共用电源",
+            "exact_match": 0.0,
+            "rouge1_f1": 0.45161290322580644,
+            "bert_f1": 0.8198233246803284,
+            "final_score": 0.5228148881466158,
+            "duration_ms": 45794.5,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          }
+        }
+      },
+      {
+        "id": "100",
+        "document": "CN101554691B.pdf",
+        "category_label": "工艺步骤/因果",
+        "target_page": 11,
+        "arms": {
+          "baseline": {
+            "ok": true,
+            "prediction": "是否存在涂敷不良位置?",
+            "exact_match": 1.0,
+            "rouge1_f1": 1.0,
+            "bert_f1": 0.9447715282440186,
+            "final_score": 0.9723857641220093,
+            "duration_ms": 36840.8,
+            "first_hit_rank": null,
+            "mrr": null,
+            "error": null
+          },
+          "rag": {
+            "ok": true,
+            "prediction": "是否存在涂敷不良位置?",
+            "exact_match": 1.0,
+            "rouge1_f1": 1.0,
+            "bert_f1": 0.9447715282440186,
+            "final_score": 0.9723857641220093,
+            "duration_ms": 29064.9,
+            "first_hit_rank": 1,
+            "mrr": 1.0,
+            "error": null
+          }
+        }
+      }
+    ]
+  },
+  "failures": [],
+  "degradations": [],
+  "conclusion": [
+    "EM（规范化精确匹配）：baseline=0.25，rag=0.25，差值 +0.0",
+    "ROUGE-1 F1（jieba）：baseline=0.683333，rag=0.693786，差值 +0.010453",
+    "官方综合分：baseline=0.649845，rag=0.651527，差值 +0.001682",
+    "失败率：baseline=0.0，rag=0.0，差值 +0.0",
+    "降级率：baseline=0.0，rag=0.0，差值 +0.0",
+    "检索质量（rag 臂）：Recall@1=0.5，Recall@3=0.5，Recall@6=1.0，MRR=0.625（样本 2 题，跳过 2 题无目标页提示）。"
+  ]
+}

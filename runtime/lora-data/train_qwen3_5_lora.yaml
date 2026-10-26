@@ -1,0 +1,62 @@
+### InduDoc AI · 复赛附图 LoRA 训练配置（Qwen3.5-4B · 只训视觉侧）
+### 用法：llamafactory-cli train train_qwen3_5_lora.yaml
+### 依据 LLaMA-Factory 对 qwen3_5 的注册：
+###   vision_model_keys   = visual.pos_embed / visual.patch_embed / visual.blocks
+###   projector_keys     = model.visual.merger
+###   language_model_keys= language_model / lm_head
+###   lora_conflict_keys = patch_embed（永不参与 LoRA）
+### 因此 freeze_language_model=true 时，LoRA 只落在 ViT 的线性层上，语言模型与接口层完全冻结。
+
+### model
+model_name_or_path: /root/models/Qwen3.5-4B
+trust_remote_code: true
+flash_attn: fa2
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target: all
+freeze_vision_tower: false
+freeze_multi_modal_projector: true
+freeze_language_model: true
+
+### dataset
+dataset: patent_fig
+eval_dataset: patent_fig_val
+template: qwen3_5_nothink
+cutoff_len: 1024
+max_samples: 20000
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 4
+packing: false
+
+### output
+output_dir: /root/outputs/qwen3.5-4b-patent-lora
+logging_steps: 10
+save_steps: 100
+eval_strategy: steps
+eval_steps: 100
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+
+### train
+### 显存实测依据（CPU 预检）：单图 543x768 -> grid 48x34 -> 408 image tokens
+###   样本 input_ids 全长 437~466（cutoff_len=1024 不截断），监督 token 9
+###   权重 9.3GB + LoRA(仅 ViT) ~0.1GB + 激活/logits ~2.7GB + ctx ~1GB = ~13GB
+###   => 24GB 卡用 bs=4/accum=4 有余量；OOM 时退到 bs=2/accum=8
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 1.0e-4
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+bf16: true
+gradient_checkpointing: true
+ddp_timeout: 1800
+resume_from_checkpoint: null
