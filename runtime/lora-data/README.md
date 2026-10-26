@@ -38,12 +38,12 @@
 ## 上传到实例（Windows PowerShell，本地执行）
 
 ```powershell
-scp -P <实例SSH端口> -r "E:\my_Program\多模态\runtime\lora-data" root@<实例IP>:/root/data
-scp -P <实例SSH端口> -r "E:\my_Program\多模态项目\Qwen3.5-4B" root@<实例IP>:/root/models
-scp -P <实例SSH端口> -r "E:\my_Program\LlamaFactory" root@<实例IP>:/root/
+scp -P <实例SSH端口> -r "<本仓库>\runtime\lora-data" root@<实例IP>:/root/data
+scp -P <实例SSH端口> -r "<本地基座权重目录>\Qwen3.5-4B" root@<实例IP>:/root/models
+scp -P <实例SSH端口> -r "<本地 LlamaFactory 目录>" root@<实例IP>:/root/
 ```
 
-> 路径说明：当前工作区是 `E:\my_Program\多模态`，本训练包就在它的 `runtime\lora-data`；基座权重与训练框架**不在本仓库内**——`Qwen3.5-4B` 在 `E:\my_Program\多模态项目\Qwen3.5-4B`，`LlamaFactory` 在 `E:\my_Program\LlamaFactory`（`多模态项目\LlamaFactory` 是另一份副本）。
+> 路径说明：本训练包在仓库内的 `runtime/lora-data`；基座权重 `Qwen3.5-4B` 与训练框架 `LlamaFactory` **不在本仓库**，填你本机的实际路径即可。
 
 `ssh -p <端口> root@<实例IP>` 进实例后：
 
